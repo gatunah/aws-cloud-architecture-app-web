@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cloud Document Manager AWS</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+<header>
+
+<h1>☁ Cloud Document Manager AWS</h1>
+
+<p>
+EC2 + Docker + Amazon S3 + IAM Role
+</p>
+
+</header>
+
+
+<section class="status-container">
+
+
+<div class="status-card">
+
+<h3>🖥 EC2</h3>
+
+<span class="online">
+● Online
+</span>
+
+<p>
+Amazon Linux 2023
+</p>
+
+</div>
+
+
+
+<div class="status-card">
+
+<h3>🐳 Docker</h3>
+
+<span class="online">
+● Running
+</span>
+
+<p>
+Container Flask
+</p>
+
+</div>
+
+
+
+<div class="status-card">
+
+<h3>🗄 S3</h3>
+
+<span class="online">
+● Connected
+</span>
+
+<p>
+app-documentos-cloud-2026
+</p>
+
+</div>
+
+
+</section>
+
+
+
+<section class="panel">
+
+
+<h2>📂 Documentos almacenados</h2>
+
+
+<table>
+
+<thead>
+
+<tr>
+<th>Archivo</th>
+<th>Estado</th>
+<th>Acción</th>
+</tr>
+
+</thead>
+
+
+<tbody>
+
+
+<tr>
+<td>
+📄 informe-cloud.pdf
+</td>
+
+<td>
+Disponible
+</td>
+
+<td>
+<button>
+Descargar
+</button>
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+📄 arquitectura-aws.pdf
+</td>
+
+<td>
+Disponible
+</td>
+
+<td>
+<button>
+Descargar
+</button>
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+📄 evidencia-sqs.json
+</td>
+
+<td>
+Disponible
+</td>
+
+<td>
+<button>
+Descargar
+</button>
+</td>
+
+</tr>
+
+
+</tbody>
+
+
+</table>
+
+
+</section>
+
+
+
+
+<section class="panel">
+
+
+<h2>📊 Auditoría SQS</h2>
+
+
+<div class="event">
+
+
+<p>
+<b>Evento:</b>
+LISTAR_DOCUMENTOS
+</p>
+
+
+<p>
+<b>Detalle:</b>
+Usuario consultó documentos disponibles
+</p>
+
+
+<p>
+<b>Fecha:</b>
+2026-08-27T04:30:00
+</p>
+
+
+</div>
+
+
+
+<div class="event">
+
+
+<p>
+<b>Evento:</b>
+DESCARGA_DOCUMENTO
+</p>
+
+
+<p>
+<b>Detalle:</b>
+informe-cloud.pdf
+</p>
+
+
+<p>
+<b>Fecha:</b>
+2026-08-27T04:31:00
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+<section class="architecture">
+
+
+<h2>Arquitectura desplegada</h2>
+
+
+<img src="../images/arquitectura-general.png"
+alt="Arquitectura AWS">
+
+
+</section>
+
+
+
+<footer>
+
+<p>
+Arquitectura Cloud - AWS Academy
+</p>
+
+
+</footer>
+
+
+
+</div>
+
+
+</body>
+
+</html>
