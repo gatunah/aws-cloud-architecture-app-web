@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Cloud Document Manager</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>☁ Cloud Document Manager</h1>
+
+<p>EC2 + Docker + Amazon S3 + IAM Role</p>
+
+</header>
+
+
+
+<div class="container">
+
+
+<div class="cards">
+
+
+<div class="card">
+
+<h2>🖥 EC2</h2>
+
+<p class="online">● Online</p>
+
+<p>Amazon Linux 2023</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>🐳 Docker</h2>
+
+<p class="online">● Running</p>
+
+<p>Container Flask</p>
+
+</div>
+
+
+
+
+<div class="card">
+
+<h2>🗄 S3</h2>
+
+<p class="online">● Connected</p>
+
+<p>app-documentos-cloud-2026</p>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="files">
+
+<h2>📂 Documentos almacenados</h2>
+
+
+
+<div class="file">
+
+📄 arquitectura-cloud.pdf
+
+<a class="button" href="#">
+Descargar
+</a>
+
+</div>
+
+
+
+<div class="file">
+
+📄 evidencia-s3.txt
+
+<a class="button" href="#">
+Descargar
+</a>
+
+</div>
+
+
+
+
+<div class="file">
+
+📄 auditoria-sqs.json
+
+<a class="button" href="#">
+Descargar
+</a>
+
+</div>
+
+
+
+</div>
+
+
+
+
+<footer>
+
+<p>
+Arquitectura Cloud - AWS Academy
+</p>
+
+</footer>
+
+
+
+</div>
+
+
+</body>
+
+</html>
