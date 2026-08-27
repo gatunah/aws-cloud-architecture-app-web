@@ -406,7 +406,7 @@ app-documentos/
 
 # 👤 Autor
 
-Daniela Francisca Oyarce Rodríguez
+Daniela Oyarce
 
 Proyecto AWS Academy  
 Cloud Architecture
