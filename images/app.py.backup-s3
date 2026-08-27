@@ -1,0 +1,54 @@
+from flask import Flask, render_template, redirect
+import boto3
+
+app = Flask(__name__)
+
+BUCKET_NAME = "app-documentos-cloud-2026"
+
+s3 = boto3.client("s3")
+
+
+@app.route("/")
+def inicio():
+
+    archivos = []
+
+    try:
+        respuesta = s3.list_objects_v2(
+            Bucket=BUCKET_NAME
+        )
+
+        for objeto in respuesta.get("Contents", []):
+            archivos.append(objeto["Key"])
+
+    except Exception as e:
+        archivos.append("Error conectando a S3")
+
+
+    return render_template(
+        "index.html",
+        bucket=BUCKET_NAME,
+        archivos=archivos
+    )
+
+
+@app.route("/descargar/<nombre>")
+def descargar(nombre):
+
+    url = s3.generate_presigned_url(
+        "get_object",
+        Params={
+            "Bucket": BUCKET_NAME,
+            "Key": nombre
+        },
+        ExpiresIn=3600
+    )
+
+    return redirect(url)
+
+
+if __name__ == "__main__":
+    app.run(
+        host="0.0.0.0",
+        port=80
+    )

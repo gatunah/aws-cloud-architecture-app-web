@@ -1,764 +1,411 @@
-\# ☁ Cloud Document Manager
+# ☁ Cloud Document Manager AWS
+
+## Aplicación web Flask contenerizada utilizando Amazon EC2, Docker, Amazon S3 y Amazon SQS
+
+Proyecto desarrollado como implementación práctica de arquitectura cloud utilizando servicios de Amazon Web Services (AWS).
+
+La solución implementa una aplicación web que permite consultar documentos almacenados en Amazon S3, generar descargas temporales y registrar eventos de auditoría mediante Amazon SQS.
+
+La aplicación fue desplegada utilizando contenedores Docker sobre Amazon EC2, incorporando escalabilidad mediante Auto Scaling y distribución de tráfico mediante Application Load Balancer.
+
+---
+
+# 🏗️ Arquitectura general implementada
+
+La solución utiliza una arquitectura basada en servicios administrados de AWS:
+
+```
+Usuario
+   |
+   |
+Application Load Balancer
+   |
+   |
+Auto Scaling Group
+   |
+   |
+EC2 + Docker
+   |
+   |
+Flask Application
+   |
+   +----------------+
+   |                |
+   ↓                ↓
+ Amazon S3       Amazon SQS
+
+Documentos       Auditoría
+```
+
+## Evidencia de arquitectura
+
+![Arquitectura general AWS](images/arquitectura-general.png)
 
 
+📸 **Captura requerida:**
 
-Aplicación web contenerizada desarrollada como proyecto de arquitectura cloud utilizando servicios de Amazon Web Services (AWS).
+Crear una imagen propia (puede ser Draw.io, PowerPoint o similar) mostrando:
 
+- Usuario
+- ALB
+- Auto Scaling
+- EC2
+- Docker
+- Flask
+- S3
+- SQS
 
+La imagen debe representar el flujo completo de la aplicación.
 
-El proyecto implementa una solución basada en una arquitectura pública en AWS, donde una aplicación Flask ejecutándose en contenedores Docker permite consultar documentos almacenados en Amazon S3 y generar eventos de auditoría mediante Amazon SQS.
+---
 
+# 🚀 Descripción del proyecto
 
-
-\---
-
-
-
-\# 📌 Descripción del proyecto
-
-
-
-Cloud Document Manager es una aplicación web desarrollada con Flask y desplegada sobre Amazon EC2 utilizando Docker.
-
-
+Cloud Document Manager es una aplicación desarrollada en Python utilizando Flask.
 
 La aplicación permite:
 
+- Visualizar documentos almacenados en Amazon S3.
+- Generar enlaces temporales para descarga.
+- Registrar acciones realizadas por usuarios.
+- Comunicarse con servicios AWS mediante boto3.
+- Ejecutarse dentro de un contenedor Docker.
 
+---
 
-\- Consultar documentos almacenados en Amazon S3.
+# 🖥️ Amazon EC2
 
-\- Generar enlaces temporales de descarga mediante URLs prefirmadas.
+La aplicación se ejecuta sobre instancias Amazon EC2 utilizando:
 
-\- Registrar eventos de uso mediante Amazon SQS.
+- Amazon Linux 2023.
+- Docker Engine.
+- IAM Role para acceso seguro a servicios AWS.
 
-\- Ejecutarse en una arquitectura escalable utilizando Amazon EC2 Auto Scaling.
+## Evidencia EC2 funcionando
 
-\- Distribuir tráfico mediante Application Load Balancer.
+![EC2 Docker Running](images/ec2-docker-running.png)
 
 
+📸 **Captura requerida:**
 
-\---
-
-
-
-\# 🏗️ Arquitectura de solución
-
-
-
-La arquitectura implementada utiliza servicios administrados de AWS para lograr disponibilidad, escalabilidad y separación de responsabilidades.
-
-
-
-```
-
-&#x20;                        Usuario
-
-&#x20;                           |
-
-&#x20;                           |
-
-&#x20;                           ↓
-
-
-
-&#x20;             Application Load Balancer
-
-&#x20;                           |
-
-&#x20;                           |
-
-&#x20;                           ↓
-
-
-
-&#x20;                EC2 Auto Scaling Group
-
-&#x20;                           |
-
-&#x20;             -----------------------------
-
-&#x20;             |                           |
-
-&#x20;             ↓                           ↓
-
-
-
-&#x20;       EC2 Instance              EC2 Instance
-
-&#x20;             |
-
-&#x20;             |
-
-&#x20;             ↓
-
-
-
-&#x20;       Docker Container
-
-&#x20;             |
-
-&#x20;             |
-
-&#x20;             ↓
-
-
-
-&#x20;         Flask Application
-
-&#x20;             |
-
-&#x20;       ---------------------
-
-&#x20;       |                   |
-
-&#x20;       ↓                   ↓
-
-
-
-&#x20;    Amazon S3           Amazon SQS
-
-
-
-&#x20; Documentos        Auditoría de eventos
-
-```
-
-
-
-\---
-
-
-
-\# ☁ Servicios AWS utilizados
-
-
-
-\## Amazon EC2
-
-
-
-Servicio utilizado para ejecutar las instancias Linux donde se despliega la aplicación.
-
-
-
-Características:
-
-
-
-\- Sistema operativo: Amazon Linux 2023.
-
-\- Tipo de instancia: t2.micro / t3.micro.
-
-\- Ejecución mediante contenedores Docker.
-
-\- Integración mediante IAM Role.
-
-
-
-\---
-
-
-
-\## Docker
-
-
-
-La aplicación Flask fue contenerizada utilizando Docker.
-
-
-
-La imagen contiene:
-
-
-
-\- Python 3.12.
-
-\- Flask.
-
-\- Librería boto3 para comunicación con AWS.
-
-\- Código de aplicación.
-
-\- Plantillas HTML.
-
-
-
-Ejemplo de construcción:
-
-
+Ingresar por SSH a la instancia y ejecutar:
 
 ```bash
-
-docker build -t app-documentos:4.0 .
-
+docker ps
 ```
 
+La captura debe mostrar:
 
+- Contenedor activo.
+- Nombre del contenedor.
+- Puerto publicado:
+
+Ejemplo:
+
+```
+0.0.0.0:80->80/tcp
+```
+
+---
+
+# 🐳 Contenerización con Docker
+
+La aplicación fue empaquetada mediante Docker utilizando:
+
+- Imagen basada en Python 3.12.
+- Flask como framework web.
+- Dependencias instaladas mediante requirements.txt.
+
+Construcción:
+
+```bash
+docker build -t app-documentos .
+```
 
 Ejecución:
 
-
-
 ```bash
-
-docker run -d -p 80:80 \\
-
-\--name app-documentos-v4 \\
-
-app-documentos:4.0
-
+docker run -d -p 80:80 app-documentos
 ```
 
+---
 
+# 🗄️ Amazon S3
 
-\---
-
-
-
-\## Amazon S3
-
-
-
-Servicio utilizado para almacenamiento de documentos.
-
-
+Amazon S3 es utilizado como almacenamiento de documentos.
 
 Bucket utilizado:
 
-
-
 ```
-
 app-documentos-cloud-2026
-
 ```
-
-
 
 Funciones implementadas:
 
+- Consulta de archivos disponibles.
+- Generación de URLs temporales.
+- Descarga segura mediante objetos S3.
+
+## Evidencia Amazon S3
+
+![Bucket S3 documentos](images/s3-documentos.png)
 
 
-\- Listado de documentos disponibles.
+📸 **Captura requerida:**
 
-\- Generación de URLs temporales para descarga.
+Desde la consola AWS:
 
-\- Acceso mediante SDK boto3.
+Amazon S3 → Bucket:
 
+```
+app-documentos-cloud-2026
+```
 
+La captura debe mostrar:
 
-\---
+- Nombre del bucket.
+- Archivos almacenados dentro.
 
+---
 
+# 📨 Amazon SQS
 
-\## Amazon SQS
-
-
-
-Servicio utilizado para registrar eventos de auditoría.
-
-
+Amazon SQS es utilizado como sistema de auditoría de eventos.
 
 Cola utilizada:
 
-
-
 ```
-
 app-documentos-auditoria-v1
-
 ```
-
-
 
 Eventos registrados:
 
+- Consulta de documentos.
+- Descarga de documentos.
 
-
-\- Consulta de documentos.
-
-\- Descarga de documentos.
-
-
-
-Ejemplo de evento:
-
-
+Ejemplo:
 
 ```json
-
 {
-
-&#x20; "evento": "LISTAR\_DOCUMENTOS",
-
-&#x20; "detalle": "Usuario consultó documentos disponibles",
-
-&#x20; "fecha": "2026-08-27T00:00:00"
-
+ "evento":"LISTAR_DOCUMENTOS",
+ "detalle":"Usuario consultó documentos disponibles"
 }
-
 ```
 
+## Evidencia Amazon SQS
+
+![Cola SQS auditoría](images/sqs-auditoria.png)
 
 
-\---
+📸 **Captura requerida:**
 
+Ingresar a:
 
+Amazon SQS → Cola:
 
-\## IAM Role
+```
+app-documentos-auditoria-v1
+```
 
+Mostrar:
 
+- Mensajes disponibles.
+- Fecha de recepción.
+- Cantidad de mensajes.
 
-Las instancias EC2 utilizan un perfil IAM para permitir la comunicación segura con servicios AWS.
+---
 
+# ⚖️ Application Load Balancer
 
-
-Permite:
-
-
-
-\- Acceso controlado a Amazon S3.
-
-\- Envío de mensajes a Amazon SQS.
-
-
-
-No se almacenan credenciales AWS dentro del código.
-
-
-
-\---
-
-
-
-\## Application Load Balancer
-
-
-
-Servicio utilizado para distribuir solicitudes HTTP hacia las instancias disponibles.
-
-
+El tráfico hacia la aplicación es distribuido mediante un Application Load Balancer.
 
 Configuración:
 
-
-
-\- Protocolo: HTTP
-
-\- Puerto: 80
-
-\- Target Group:
-
-&#x20; 
+- Protocolo: HTTP
+- Puerto: 80
+- Target Group:
 
 ```
-
 tg-app-documentos-v1
-
 ```
 
+## Evidencia Load Balancer
+
+![ALB Target Group](images/alb-target-group.png)
 
 
-\---
+📸 **Captura requerida:**
 
+Ir a:
 
+EC2 → Target Groups
 
-\## EC2 Auto Scaling
+Mostrar:
 
+- Nombre del Target Group.
+- Instancia registrada.
+- Estado healthy.
 
+---
 
-Servicio utilizado para mantener la capacidad de la aplicación.
+# 🔄 Auto Scaling
 
-
+La solución utiliza EC2 Auto Scaling para administrar la capacidad de la aplicación.
 
 Configuración:
 
-
-
 ```
-
-Auto Scaling Group:
-
-
+Nombre:
 
 app-documentos-asg-v1
-
 ```
 
+Capacidad:
+
+```
+Mínimo: 1
+Deseado: 1
+Máximo: 2
+```
+
+## Evidencia Auto Scaling
+
+![Auto Scaling Group](images/autoscaling-group.png)
 
 
-Características:
+📸 **Captura requerida:**
 
+Ir a:
 
+EC2 → Auto Scaling Groups
 
-\- Capacidad deseada: 1 instancia.
+Mostrar:
 
-\- Límite máximo: 2 instancias.
+- Nombre del grupo.
+- Capacidad deseada.
+- Instancias administradas.
 
-\- Creación mediante Launch Template.
+---
 
-\- Uso de AMI personalizada.
+# 🖼️ AMI personalizada
 
-
-
-\---
-
-
-
-\# 🖼️ Imagen personalizada AMI
-
-
-
-Se creó una AMI personalizada para permitir la replicación de la aplicación.
-
-
+Se creó una imagen personalizada para permitir que Auto Scaling pueda crear nuevas instancias con la aplicación configurada.
 
 AMI:
 
-
-
 ```
-
 app-documentos-ami-v2
-
 ```
-
-
 
 Incluye:
 
+- Amazon Linux 2023.
+- Docker instalado.
+- Aplicación Flask.
+- Configuración necesaria.
+
+## Evidencia AMI
+
+![AMI personalizada](images/ami-personalizada.png)
 
 
-\- Amazon Linux 2023.
+📸 **Captura requerida:**
 
-\- Docker instalado.
+Ir a:
 
-\- Aplicación Flask.
+EC2 → AMIs
 
-\- Configuración necesaria para ejecución.
+Mostrar:
 
-
-
-Esta imagen permite que Auto Scaling cree nuevas instancias con la aplicación preparada.
-
-
-
-\---
-
-
-
-\# 📂 Estructura del proyecto
-
-
+- Nombre:
 
 ```
+app-documentos-ami-v2
+```
 
+- Estado disponible.
+- ID de AMI.
+
+---
+
+# 🌐 Aplicación funcionando
+
+La aplicación permite visualizar los documentos disponibles desde una interfaz web.
+
+## Evidencia aplicación web
+
+![Aplicación web Flask](images/aplicacion-web.png)
+
+
+📸 **Captura requerida:**
+
+Abrir el DNS del Load Balancer:
+
+Mostrar:
+
+- Página funcionando.
+- Nombre del bucket.
+- Documentos disponibles.
+
+---
+
+# 🔐 Seguridad implementada
+
+La solución utiliza:
+
+- IAM Role para acceso AWS.
+- Security Groups para controlar tráfico.
+- SSH mediante llave privada.
+- Separación entre aplicación y servicios AWS.
+
+No se almacenan credenciales AWS dentro del código.
+
+---
+
+# 📂 Estructura del proyecto
+
+```
 app-documentos/
 
-
-
 ├── app.py
-
-│
-
 ├── Dockerfile
-
-│
-
 ├── requirements.txt
-
-│
-
 ├── templates/
-
 │   └── index.html
-
+├── images/
+│   ├── arquitectura-general.png
+│   ├── ec2-docker-running.png
+│   ├── s3-documentos.png
+│   ├── sqs-auditoria.png
+│   ├── alb-target-group.png
+│   ├── autoscaling-group.png
+│   ├── ami-personalizada.png
+│   └── aplicacion-web.png
 │
-
 ├── README.md
-
-│
-
 └── .gitignore
-
 ```
 
+---
 
-
-\---
-
-
-
-\# 🐍 Aplicación Flask
-
-
-
-La aplicación utiliza:
-
-
-
-```python
-
-Flask
-
-boto3
-
-```
-
-
-
-Componentes principales:
-
-
-
-\## Consulta de documentos
-
-
-
-La aplicación consulta objetos almacenados en S3:
-
-
-
-```python
-
-s3.list\_objects\_v2()
-
-```
-
-
-
-\---
-
-
-
-\## Descarga segura
-
-
-
-Los documentos se entregan mediante URLs temporales:
-
-
-
-```python
-
-generate\_presigned\_url()
-
-```
-
-
-
-\---
-
-
-
-\## Auditoría mediante SQS
-
-
-
-Los eventos son enviados utilizando:
-
-
-
-```python
-
-sqs.send\_message()
-
-```
-
-
-
-\---
-
-
-
-\# 🔐 Seguridad
-
-
-
-Buenas prácticas implementadas:
-
-
-
-\- Uso de IAM Role para acceso AWS.
-
-\- No almacenar claves AWS dentro del código.
-
-\- Uso de Security Groups.
-
-\- Uso de llaves SSH para acceso EC2.
-
-\- Separación entre aplicación y servicios AWS.
-
-
-
-\---
-
-
-
-\# 🚀 Despliegue
-
-
-
-Flujo de despliegue:
-
-
-
-```
-
-Código Flask
-
-&#x20;     |
-
-&#x20;     ↓
-
-Docker Image
-
-&#x20;     |
-
-&#x20;     ↓
-
-EC2
-
-&#x20;     |
-
-&#x20;     ↓
-
-AMI personalizada
-
-&#x20;     |
-
-&#x20;     ↓
-
-Auto Scaling
-
-&#x20;     |
-
-&#x20;     ↓
-
-Load Balancer
-
-```
-
-
-
-\---
-
-
-
-\# 🧪 Validaciones realizadas
-
-
-
-Durante la implementación se verificó:
-
-
-
-✅ Aplicación Flask funcionando.
-
-
-
-✅ Contenedor Docker ejecutándose.
-
-
-
-✅ Comunicación con Amazon S3.
-
-
-
-✅ Registro de eventos mediante Amazon SQS.
-
-
-
-✅ Creación de AMI personalizada.
-
-
-
-✅ Creación de instancias mediante Auto Scaling.
-
-
-
-✅ Distribución mediante Application Load Balancer.
-
-
-
-\---
-
-
-
-\# 🛠️ Tecnologías utilizadas
-
-
+# 🛠️ Tecnologías utilizadas
 
 | Tecnología | Uso |
-
 |---|---|
-
-| Python | Lenguaje principal |
-
+| Python | Desarrollo aplicación |
 | Flask | Framework web |
-
 | Docker | Contenerización |
-
 | Amazon EC2 | Computación |
-
 | Amazon S3 | Almacenamiento |
-
-| Amazon SQS | Mensajería |
-
-| IAM | Control de permisos |
-
-| ALB | Balanceo de tráfico |
-
+| Amazon SQS | Auditoría |
+| IAM | Permisos |
+| ALB | Balanceo |
 | Auto Scaling | Escalabilidad |
 
+---
 
+# 👤 Autor
 
-\---
-
-
-
-\# 📚 Proyecto AWS Academy
-
-
-
-Proyecto desarrollado como parte del aprendizaje de arquitectura cloud utilizando Amazon Web Services.
-
-
-
-Objetivo:
-
-
-
-Diseñar, implementar y documentar una solución cloud utilizando servicios fundamentales de AWS, aplicando conceptos de:
-
-
-
-\- Computación en la nube.
-
-\- Contenedores.
-
-\- Almacenamiento.
-
-\- Mensajería.
-
-\- Escalabilidad.
-
-\- Alta disponibilidad.
-
-
-
-\---
-
-
-
-\# Autor
-
-
-
-Daniela Francisca Oyarce Rodríguez
-
-
-
-AWS Academy - Cloud Architecture Project
-
+Daniela Oyarce 
+Proyecto AWS Academy  
+Cloud Architecture
