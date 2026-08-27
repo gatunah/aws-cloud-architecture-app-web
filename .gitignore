@@ -1,0 +1,6 @@
+*.pem
+.env
+.aws/
+__pycache__/
+*.pyc
+*.tar.gz
