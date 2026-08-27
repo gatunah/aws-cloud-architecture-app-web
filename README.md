@@ -756,7 +756,7 @@ Diseñar, implementar y documentar una solución cloud utilizando servicios fund
 
 
 
-Daniela Francisca Oyarce Rodríguez
+Daniela Oyarce
 
 
 
