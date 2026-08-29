@@ -41,22 +41,6 @@ Documentos       Auditoría
 
 ![Arquitectura general AWS](images/arquitectura-general.png)
 
-
-📸 **Captura requerida:**
-
-Crear una imagen propia (puede ser Draw.io, PowerPoint o similar) mostrando:
-
-- Usuario
-- ALB
-- Auto Scaling
-- EC2
-- Docker
-- Flask
-- S3
-- SQS
-
-La imagen debe representar el flujo completo de la aplicación.
-
 ---
 
 # 🚀 Descripción del proyecto
@@ -85,26 +69,6 @@ La aplicación se ejecuta sobre instancias Amazon EC2 utilizando:
 
 ![EC2 Docker Running](images/ec2-docker-running.png)
 
-
-📸 **Captura requerida:**
-
-Ingresar por SSH a la instancia y ejecutar:
-
-```bash
-docker ps
-```
-
-La captura debe mostrar:
-
-- Contenedor activo.
-- Nombre del contenedor.
-- Puerto publicado:
-
-Ejemplo:
-
-```
-0.0.0.0:80->80/tcp
-```
 
 ---
 
@@ -151,21 +115,6 @@ Funciones implementadas:
 ![Bucket S3 documentos](images/s3-documentos.png)
 
 
-📸 **Captura requerida:**
-
-Desde la consola AWS:
-
-Amazon S3 → Bucket:
-
-```
-app-documentos-cloud-2026
-```
-
-La captura debe mostrar:
-
-- Nombre del bucket.
-- Archivos almacenados dentro.
-
 ---
 
 # 📨 Amazon SQS
@@ -197,22 +146,6 @@ Ejemplo:
 ![Cola SQS auditoría](images/sqs-auditoria.png)
 
 
-📸 **Captura requerida:**
-
-Ingresar a:
-
-Amazon SQS → Cola:
-
-```
-app-documentos-auditoria-v1
-```
-
-Mostrar:
-
-- Mensajes disponibles.
-- Fecha de recepción.
-- Cantidad de mensajes.
-
 ---
 
 # ⚖️ Application Load Balancer
@@ -233,18 +166,6 @@ tg-app-documentos-v1
 
 ![ALB Target Group](images/alb-target-group.png)
 
-
-📸 **Captura requerida:**
-
-Ir a:
-
-EC2 → Target Groups
-
-Mostrar:
-
-- Nombre del Target Group.
-- Instancia registrada.
-- Estado healthy.
 
 ---
 
@@ -273,18 +194,6 @@ Máximo: 2
 ![Auto Scaling Group](images/autoscaling-group.png)
 
 
-📸 **Captura requerida:**
-
-Ir a:
-
-EC2 → Auto Scaling Groups
-
-Mostrar:
-
-- Nombre del grupo.
-- Capacidad deseada.
-- Instancias administradas.
-
 ---
 
 # 🖼️ AMI personalizada
@@ -309,23 +218,6 @@ Incluye:
 ![AMI personalizada](images/ami-personalizada.png)
 
 
-📸 **Captura requerida:**
-
-Ir a:
-
-EC2 → AMIs
-
-Mostrar:
-
-- Nombre:
-
-```
-app-documentos-ami-v2
-```
-
-- Estado disponible.
-- ID de AMI.
-
 ---
 
 # 🌐 Aplicación funcionando
@@ -336,16 +228,6 @@ La aplicación permite visualizar los documentos disponibles desde una interfaz 
 
 ![Aplicación web Flask](images/aplicacion-web.png)
 
-
-📸 **Captura requerida:**
-
-Abrir el DNS del Load Balancer:
-
-Mostrar:
-
-- Página funcionando.
-- Nombre del bucket.
-- Documentos disponibles.
 
 ---
 
